@@ -17,11 +17,15 @@ class GameApiController extends ApiController
         $this->view = new ApiView();
     }
 
+    //OBTENGO TODOS LOS JUEGOS
     public function getGames($params = [])
     {
+
         $games = $this->model->getAll();
         $this->view->response($games, 200);
     }
+
+    //OBTENGO UN JUEGO POR ID
 
     public function getGame($params = [])
     {
@@ -37,12 +41,16 @@ class GameApiController extends ApiController
         }
     }
 
+    //AGREGO UN JUEGO
+
     public function addGame()
     {
         $data = $this->getData();
         $this->model->add($data);
         $this->view->response("El juego ha sido creado", 201);
     }
+
+    //ACTUALIZO UN JUEGO
 
     public function updateGame($params = [])
     {
@@ -56,8 +64,15 @@ class GameApiController extends ApiController
                 $this->model->updateGame($newBody, $id);
                 $this->view->response("El juego ha sido actualizado", 200);
             }
+            else {
+                $this->view->response("Faltan completar campos", 400);
+
+
+            }
         }
     }
+
+    //ELIMINO UN JUEGO
 
     public function deleteGame($params = [])
     {

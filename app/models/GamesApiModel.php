@@ -1,5 +1,5 @@
 <?php
-require 'app/models/Model.php';
+require_once 'app/models/Model.php';
 class GamesApiModel extends Model
 {
 
@@ -21,7 +21,8 @@ class GamesApiModel extends Model
     }
 
     function add($data)
-    {
+    {   
+        var_dump($data);
         $query = $this->db->prepare("INSERT INTO JUEGO ( nombre, genero, desarrollador_id, año_lanzamiento) VALUES (?,?,?,?)");
         $query->execute([$data->nombre, $data->genero, $data->desarrollador_id, $data->año_lanzamiento]);
     }
@@ -39,3 +40,5 @@ class GamesApiModel extends Model
         $query->execute([$id]);
     }
 }
+
+

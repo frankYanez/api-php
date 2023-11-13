@@ -1,10 +1,9 @@
 <?php
 
-abstract class  ApiController
+abstract class ApiController
 {
     private $model;
     private $view;
-
     protected $data;
 
 
