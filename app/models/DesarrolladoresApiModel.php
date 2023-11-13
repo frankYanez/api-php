@@ -16,12 +16,12 @@ class DesarrolladoresApiModel extends Model
     {
         $query = $this->db->prepare('SELECT * FROM desarrollador WHERE id = ?');
         $query->execute([$id]);
-        $desarrollador= $query->fetch(PDO::FETCH_OBJ);
+        $desarrollador = $query->fetch(PDO::FETCH_OBJ);
         return $desarrollador;
     }
 
     function add($data)
-    {   
+    {
         var_dump($data);
         $query = $this->db->prepare("INSERT INTO desarrollador ( nombre, sede, año_fundacion, propietario) VALUES (?,?,?,?)");
         $query->execute([$data->nombre, $data->sede, $data->año_fundacion, $data->propietario]);
@@ -34,7 +34,7 @@ class DesarrolladoresApiModel extends Model
         $query->execute([$desarrollador->nombre, $desarrollador->sede, $desarrollador->año_fundacion, $desarrollador->propietario, $id]);
     }
 
-    function deleteGame($id)
+    function deleteDesarrollador($id)
     {
         $query = $this->db->prepare("DELETE FROM desarrollador WHERE id = ?");
         $query->execute([$id]);

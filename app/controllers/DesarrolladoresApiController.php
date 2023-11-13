@@ -3,11 +3,13 @@
 require_once 'app/models/DesarrolladoresApiModel.php';
 require_once 'app/views/ApiView.php';
 require_once 'app/controllers/ApiController.php';
+require_once 'app/models/GamesApiModel.php';
 class DesarrolladoresApiController extends ApiController
 {
 
     private $model;
     private $view;
+    private $modelGames;
 
     public function __construct()
     {
@@ -16,10 +18,10 @@ class DesarrolladoresApiController extends ApiController
         $this->view = new ApiView();
     }
 
-        //OBTENGO TODOS LOS DESARROLLADORES
+    //OBTENGO TODOS LOS DESARROLLADORES
     public function getDesarrolladores($params = [])
     {
-    
+
         $desarrolladores = $this->model->getAll();
         $this->view->response($desarrolladores, 200);
     }
@@ -62,20 +64,39 @@ class DesarrolladoresApiController extends ApiController
             if ($desarrollador) {
                 $this->model->updateDesarrollador($newBody, $id);
                 $this->view->response("El desarrollador ha sido actualizado", 200);
-            }
-            else {
+            } else {
                 $this->view->response("Faltan completar campos", 400);
-
-
             }
         }
     }
 
+    public function tieneJuegos($id)
+    {
+        $juegos = $this->modelGames->getGame($id);
+        if ($juegos) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //ELIMINO UN DESARROLLADOR
+    public function deleteDesarrollador($params = [])
+    {
+        if (empty($params[':ID'])) {
+            $this->view->response("El desarrollador no existe", 404);
+        }
 
 
-
-
-
-
-
+        if ($this->tieneJuegos($params[':ID'])) {
+            $this->view->response("El desarrollador tiene juegos asociados, por favor eliminelos ", 404);
+        } else {
+            $id = $params[':ID'];
+            $desarrollador = $this->model->getDesarrollador($id);
+            if ($desarrollador) {
+                $this->model->deleteDesarrollador($id);
+                $this->view->response("El desarrollador ha sido borrado", 200);
+            }
+        }
+    }
 }
