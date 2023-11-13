@@ -3,12 +3,51 @@ require_once 'app/models/Model.php';
 class GamesApiModel extends Model
 {
 
-    function getAll()
+    function getAll($order, $field, $filterBy, $filterValue, $limit, $offset)
     {
-        $query = $this->db->prepare('SELECT * FROM juego');
-        $query->execute();
-        $games = $query->fetchAll(PDO::FETCH_OBJ);
-        return $games;
+        $query = "SELECT * FROM juego";
+
+        switch($filterBy){
+            case 'nombre':
+                $query .= ' WHERE nombre = \'' . $filterValue . '\'';
+                break;
+            case 'genero':
+                $query .= ' WHERE genero = \'' . $filterValue . '\'';
+                break;
+            case 'desarrollador_id':
+                $query .= ' WHERE desarrollador_id = \'' . $filterValue . '\'';
+                break;
+            case 'año_lanzamiento':
+                $query .= ' WHERE año_lanzamiento = \'' . $filterValue . '\'';
+                break;
+            default:
+            $query .= ' ';
+                break;
+        }
+        switch($order){
+            case 'ASC':
+                $query .= ' ORDER BY ' . $field . ' ASC';
+                break;
+            case 'DESC':
+                $query .= ' ORDER BY ' . $field . ' DESC';
+                break;
+            default:
+                $query .= ' ORDER BY alias ASC';
+                break;
+        }
+        if($limit !== 'null'){
+            $query .= ' LIMIT ' . $limit;
+        }
+
+        if($offset !== 'null'){
+            $query .= ' OFFSET ' . $offset;
+        }
+
+        $query1 = $this->db->prepare($query);
+        $query1->execute();
+        return $query1->fetchAll(PDO::FETCH_OBJ);
+
+        
     }
 
 

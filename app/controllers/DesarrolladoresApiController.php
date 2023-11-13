@@ -40,7 +40,7 @@ class DesarrolladoresApiController extends ApiController
         }
     }
 
-    //AGREGO UN JUEGO
+    //AGREGO UN DESARROLLADOR
 
     public function addDesarrollador()
     {
@@ -49,7 +49,7 @@ class DesarrolladoresApiController extends ApiController
         $this->view->response("El Desarrollador ha sido creado", 201);
     }
 
-    //ACTUALIZO UN JUEGO
+    //ACTUALIZO UN DESARROLLADOR
 
     public function updateDesarrollador($params = [])
     {
