@@ -14,6 +14,7 @@ class DesarrolladoresApiController extends ApiController
     public function __construct()
     {
         parent::__construct();
+        $this->modelGames = new GamesApiModel();        
         $this->model = new DesarrolladoresApiModel();
         $this->view = new ApiView();
     }
@@ -70,9 +71,10 @@ class DesarrolladoresApiController extends ApiController
         }
     }
 
-    public function tieneJuegos($id)
+    //ME CHEQUEA SI DETERMINADO DESARROLLADOR TIENE JUEGOS EN SU HABER
+   public function tieneJuegos($desarrollador_id)
     {
-        $juegos = $this->modelGames->getGame($id);
+        $juegos = $this->modelGames->getGameByDesarrollador($desarrollador_id);
         if ($juegos) {
             return true;
         } else {
@@ -83,14 +85,15 @@ class DesarrolladoresApiController extends ApiController
     //ELIMINO UN DESARROLLADOR
     public function deleteDesarrollador($params = [])
     {
-        if (empty($params[':ID'])) {
+        $desarrollador_id = $params[':ID'];
+
+        if (empty($desarrollador_id)) {
             $this->view->response("El desarrollador no existe", 404);
         }
 
-
-        if ($this->tieneJuegos($params[':ID'])) {
-            $this->view->response("El desarrollador tiene juegos asociados, por favor eliminelos ", 404);
-        } else {
+        if ($this->tieneJuegos($desarrollador_id)) {
+            $this->view->response("El desarrollador tiene juegos asociados, por favor elimínelos", 404);
+        }else {
             $id = $params[':ID'];
             $desarrollador = $this->model->getDesarrollador($id);
             if ($desarrollador) {

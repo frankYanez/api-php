@@ -2,7 +2,7 @@
 require_once 'app/models/Model.php';
 class GamesApiModel extends Model
 {
-
+    //ME TRAE TODOS LOS JUEGOS, CON FILTROS Y DEMAS
     function getAll($order, $field, $filterBy, $filterValue, $limit, $offset)
     {
         $query = "SELECT * FROM juego";
@@ -50,7 +50,7 @@ class GamesApiModel extends Model
         
     }
 
-
+    //ME TRAE UN JUEGO POR ID
     function getGame($id)
     {
         $query = $this->db->prepare('SELECT * FROM JUEGO WHERE id = ?');
@@ -59,20 +59,29 @@ class GamesApiModel extends Model
         return $game;
     }
 
+    //ME TRAE UN JUEGO POR EL ID DEL DESARROLLADOR
+    function getGameByDesarrollador($desarrollador_id){
+        $query = $this->db->prepare('SELECT * FROM JUEGO WHERE desarrollador_id = ?');
+        $query->execute([$desarrollador_id]);
+        $game = $query->fetch(PDO::FETCH_OBJ);
+        return $game;
+
+    }
+    // AGREGO JUEGO A LA DB
     function add($data)
     {   
         var_dump($data);
         $query = $this->db->prepare("INSERT INTO JUEGO ( nombre, genero, desarrollador_id, año_lanzamiento) VALUES (?,?,?,?)");
         $query->execute([$data->nombre, $data->genero, $data->desarrollador_id, $data->año_lanzamiento]);
     }
-
+    //MODIFICO JUEGO
     function updateGame($game, $id)
     {
 
         $query = $this->db->prepare("UPDATE JUEGO SET nombre = ?, genero = ?, desarrollador_id = ?, año_lanzamiento = ? WHERE id = ?");
         $query->execute([$game->nombre, $game->genero, $game->desarrollador_id, $game->año_lanzamiento, $id]);
     }
-
+    //ELIMINO JUEGO
     function deleteGame($id)
     {
         $query = $this->db->prepare("DELETE FROM JUEGO WHERE id = ?");
