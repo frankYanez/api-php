@@ -1,4 +1,3 @@
-
 # Bienvenido a la API de Play Games 🙌🕹️
 
 ![21z](https://github.com/frankYanez/api-php/assets/103048012/9074b0c0-a060-4e1e-af1f-a7deb08a790e)
@@ -84,19 +83,35 @@ GET /api/games?offset=accion
 #### Crear un Juego
 ```http 
 POST /api/games
-(Enviar el cuerpo del Juego por POST)
+Enviar el cuerpo del Juego por POST
+EJEMPLO :
+    {
+        "nombre": "Warcraft",
+        "genero": "Estrategia",
+        "desarrollador_id": 1,
+        "año_lanzamiento": "2005"
+    }
 ```
 #### Actualizar un Juego
 ```http 
 PUT /api/games/:ID
 (Enviar el cuerpo del Juego por POST)
 EJEMPLO: PUT /api/games/105
+Raw en el Body:
+    {
+        "nombre": "Warcraft",
+        "genero": "Estrategia",
+        "desarrollador_id": 1,
+        "año_lanzamiento": "2005"
+    }
+
 ```
 #### Eliminar un Juego
 ```http
 DELETE /api/games/:ID
 ```
 EJEMPLO: DELETE /api/games/105
+
 
 
 ## DESARROLLADORES 👨‍💻
@@ -110,6 +125,7 @@ EJEMPLO: DELETE /api/games/105
   GET /api/desarrolladores/:ID
 ```
   EJEMPLO: GET /api/desarrolladores/102
+
 #### Obtener todos los Desarrollador
 
 ```http
@@ -117,24 +133,37 @@ EJEMPLO: DELETE /api/games/105
 
 ```
 
-
-
 #### Crear un Desarrollador
 ```http 
 POST /api/desarrolladores
 (Enviar el cuerpo del Desarrollador por POST)
+EJEMPLO:
+    {
+        "nombre": "CD Projekt",
+        "sede": "Varsovia, Polonia",
+        "año_fundacion": 1994,
+        "propietario": "Marcin Iwinski y MichalKiciński
+    }
 ```
 #### Actualizar un Desarrollador
 ```http 
 PUT /api/desarrolladores/:ID
 (Enviar el nuevo cuerpo del  Desarrollador por POST)
 EJEMPLO: PUT /api/desarrolladores/105
+Raw en el Body:
+    {
+        "nombre": "CD Projekt",
+        "sede": "Varsovia, Polonia",
+        "año_fundacion": 1994,
+        "propietario": "Marcin Iwinski y MichalKiciński
+    }
 ```
 #### Eliminar un Desarrollador
 ```http
 DELETE /api/desarrolladores/:ID
 ```
 EJEMPLO: DELETE /api/desarrolladores/105
+
 
 
 
